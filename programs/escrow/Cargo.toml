@@ -27,3 +27,9 @@ anchor-spl = "1.1.2"
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }
+
+[dev-dependencies]
+anchor-lang = "1"
+anchor-litesvm = "0.4.0"
+litesvm-utils = "0.4.0"
+solana-sdk = "3"

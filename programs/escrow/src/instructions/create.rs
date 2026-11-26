@@ -1,7 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
 
-use crate::constants::{ESCROW_SEED, VAULT_SEED};
+use crate::constants::{ESCROW_SEED, MAX_FEE_BPS, VAULT_SEED};
+use crate::error::EscrowError;
 use crate::state::{Escrow, EscrowState};
 
 // create struct -> data created or params created
@@ -46,6 +47,8 @@ pub fn handle_create(
     fee_bps: u16,
     deadline: i64,
 ) -> Result<()> {
+    require!(fee_bps <= MAX_FEE_BPS, EscrowError::FeeTooHigh);
+
     let escrow = &mut ctx.accounts.escrow;
 
     escrow.escrow_id = escrow_id;
