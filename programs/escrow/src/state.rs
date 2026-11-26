@@ -1,19 +1,18 @@
 use anchor_lang::prelude::*;
 
-use anchor_lang::prelude::*;
-
-pub const MAX_FEE_BPS: u16 = 1_000; // 10% hard cap
-
 #[account]
 #[derive(InitSpace)]
 pub struct Escrow {
+    pub escrow_id: u64,
     pub creator: Pubkey,
-    pub referee: Pubkey, // only this key can settle
-    pub mint: Pubkey,    // which token is held
+    pub referee: Pubkey,
+    pub mint: Pubkey,
     pub fee_recipient: Pubkey,
     pub fee_bps: u16,
-    pub deadline: i64, // unix time; after this, refunds open up
+    pub deadline: i64,
     pub total_deposited: u64,
+    pub allocated: u64, // how much the referee has promised out so far
+    pub deposit_count: u32,
     pub state: EscrowState,
     pub bump: u8,
 }
